@@ -2,6 +2,8 @@ package main
 
 import (
 	grblfeeder "plotter/pkg/grbl_feeder"
+	// "fmt"
+	gcodemanipulator "plotter/pkg/gcode_manipulator"
 	"plotter/pkg/util"
 )
 
@@ -9,7 +11,11 @@ import (
 
 func main() {
 	var grbl *grblfeeder.GrblFeeder = grblfeeder.NewGrblFeeder("/dev/ttyUSB0")
-	gcode := util.ReadFile("gcode.gcode")
+	gcode := util.ReadFile("lilien.gcode")
+	modifiedGcode := gcodemanipulator.MoveToTopLeft(gcode, 305, 200)
+	// fmt.Println(modifiedGcode)
 
-	grbl.SendGcodes(gcode)
+	util.WriteFile("m_lilien.gcode", modifiedGcode)
+
+	grbl.SendGcodes(modifiedGcode)
 }

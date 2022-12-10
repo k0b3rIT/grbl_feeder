@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func ReadFile(filePath string) []string {
@@ -21,4 +22,13 @@ func ReadFile(filePath string) []string {
     }
 
 	return fileLines
+}
+
+func WriteFile(filePath string, data []string) {
+    justString := strings.Join(data,"\n")
+    err := os.WriteFile(filePath, []byte(justString), 0644)   
+
+    if err != nil {
+        panic(err)
+    }
 }
